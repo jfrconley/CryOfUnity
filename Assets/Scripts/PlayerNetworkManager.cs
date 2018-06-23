@@ -5,13 +5,20 @@ using UnityEngine.Networking;
 
 public class PlayerNetworkManager : NetworkBehaviour
 {
-	[SyncVar (hook = "SetPlayerId")]
+//	[SyncVar (hook = "SetPlayerId")]
 	public string PlayerId;
-	
+
+	public TextMesh DebugText;
 	public Collider2D collider;
 	public Rigidbody2D rigidbody;
-	private GameNetworkManager _manager = GameNetworkManager.Singleton;
-	
+	private bool IsInit = false;
+	private GameNetworkManager _manager;
+
+	private void Awake()
+	{
+//		DebugText = gameObject.GetComponent<TextMesh>();
+	}
+
 	// Use this for initialization
 	void Start ()
 	{		
@@ -21,6 +28,22 @@ public class PlayerNetworkManager : NetworkBehaviour
 		}
 	}
 
+	private void Init()
+	{
+		if (isLocalPlayer && _manager == null && GameNetworkManager.Singleton != null && !IsInit)
+		{
+			IsInit = true;
+			Debug.Log("Requesting player name");
+			_manager = GameNetworkManager.Singleton;
+			CmdRequestName();
+		}
+	}
+	
+	private void UpdateDebugText()
+	{
+		DebugText.text = "PlayerID: " + PlayerId;
+	}
+	
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		if (isLocalPlayer && other.gameObject.layer == LayerMask.NameToLayer("SceneProps"))
@@ -39,30 +62,45 @@ public class PlayerNetworkManager : NetworkBehaviour
 	{
 		_manager.SetObjectAuthority(PlayerId, objectId);
 	}
-	
-	public override void OnStartLocalPlayer()
+
+//	public override void OnStartAuthority()
+//	{
+//		Debug.Log("Requesting player name");
+//		_manager = GameNetworkManager.Singleton;
+//		CmdRequestName();
+//	}
+	private void Update()
 	{
-		Debug.Log("Requesting name");
-		CmdRequestName();
+		Init();
 	}
 
 	[Command]
 	private void CmdRequestName()
 	{
 		Debug.Log("Setting player name");
-		PlayerId = "player:" + System.Guid.NewGuid();
+		string name = "player:" + System.Guid.NewGuid();
+		UpdateName(name);
+		RpcSetPlayerId(name);
 	}
-	
-	private void SetPlayerId(string id)
+
+	private void UpdateName(string id)
 	{
 		_manager = GameNetworkManager.Singleton;
 		PlayerId = id;
 		gameObject.name = id;
 		_manager.RegisterPlayer(id, this);
+		UpdateDebugText();
+	}
+	
+	[ClientRpc]
+	private void RpcSetPlayerId(string id)
+	{
+		UpdateName(id);
 	}
 
 	private void OnDestroy()
 	{
-		_manager.DeregisterPlayer(PlayerId);
+		if (_manager != null)
+			_manager.DeregisterPlayer(PlayerId);
 	}
 }
