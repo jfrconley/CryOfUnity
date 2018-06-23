@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - RemotePlayer
+  - Player
+  - SceneProps
   - 
   - 
   - 
