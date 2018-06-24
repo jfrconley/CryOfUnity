@@ -75,7 +75,7 @@ public class GameNetworkManager : NetworkBehaviour
         NeutralNetworkManager objectManager = GetObject(objectId);
         if (objectManager.TouchingPlayer != "")
         {
-            Debug.Log("Removing Authority for " + objectId + " from " + objectManager.TouchingPlayer);
+            Debug.Log($"Removing Authority for {objectId} from {objectManager.TouchingPlayer}");
             objectManager.NetworkIdentity.RemoveClientAuthority(GetPlayer(objectManager.TouchingPlayer).connectionToClient);
             objectManager.TouchingPlayer = "";
         }

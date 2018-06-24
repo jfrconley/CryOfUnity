@@ -78,7 +78,16 @@ public class NeutralNetworkManager : NetworkBehaviour
         Debug.Log("Setting object id");
         ObjectId = "object:" + System.Guid.NewGuid();
     }
-	
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (ObjectId != "")
+        {
+            SetObjectId(ObjectId);
+        }
+    }
+    
     private void SetObjectId(string id)
     {
         _manager = GameNetworkManager.Singleton;
