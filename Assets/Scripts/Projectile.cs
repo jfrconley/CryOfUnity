@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour {
 
     [SerializeField] GameObject bulletImpactPrefab;
     int damage = 1;
+    
     float bulletSpeed = 60f;
     float physicsHitMultiplier = 1f;
 

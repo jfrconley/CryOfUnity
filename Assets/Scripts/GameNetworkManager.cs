@@ -28,9 +28,9 @@ public class GameNetworkManager : NetworkBehaviour
         {
             _playerMap.Add(id, manager);
         }
-        catch (ArgumentException err)
+        catch (ArgumentException)
         {
-            Debug.Log("Player already registered");
+            Debug.Log($"Player {id} already registered");
         }
     }
 
@@ -46,7 +46,14 @@ public class GameNetworkManager : NetworkBehaviour
     
     public void RegisterObject(string id, NeutralNetworkManager manager)
     {
-        _objectMap.Add(id, manager);
+        try
+        {
+            _objectMap.Add(id, manager);
+        }
+        catch (ArgumentException)
+        {
+            Debug.Log($"Object {id} already registered");
+        }
     }
 
     public void DeregisterObject(string id)
