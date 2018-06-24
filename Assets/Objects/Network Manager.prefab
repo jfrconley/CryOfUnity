@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4972584416203940}
   - component: {fileID: 114184927265486602}
   - component: {fileID: 114729128389513432}
-  - component: {fileID: 114470905720641958}
+  - component: {fileID: 114607130801799662}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
-  m_OfflineScene: 
+  m_OfflineScene: MenuScene
   m_OnlineScene: 
   m_SpawnPrefabs: []
   m_CustomConfig: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Channels: 
   m_UseWebSockets: 0
   m_UseSimulator: 0
-  m_SimulatedLatency: 1
+  m_SimulatedLatency: 53
   m_PacketLossPercentage: 0
   m_MaxBufferedPackets: 16
   m_AllowFragmentation: 1
@@ -137,13 +137,14 @@ MonoBehaviour:
   m_MaxPlayers: 8
   m_MaxPlayersPerConnection: 2
   m_MinPlayers: 1
-  m_LobbyPlayerPrefab: {fileID: 114802460978319154, guid: 44746b2203264bd4d98e2a4037d33c43,
+  m_LobbyPlayerPrefab: {fileID: 114288370230726192, guid: 2a986e1a85638144eb331a1e5c3364af,
     type: 2}
-  m_GamePlayerPrefab: {fileID: 130118, guid: 7c3faa22461350c46a97137c10c618c2, type: 2}
-  m_LobbyScene: 
-  m_PlayScene: 
+  m_GamePlayerPrefab: {fileID: 1389985889083714, guid: bce7c57e62282ec4e839e833cea402b7,
+    type: 2}
+  m_LobbyScene: MenuScene
+  m_PlayScene: GameScene
   lobbySlots: []
---- !u!114 &114470905720641958
+--- !u!114 &114607130801799662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -151,7 +152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1402170134267338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1989760260, guid: 48da40995ee849c4dbfc843dd065499d, type: 3}
+  m_Script: {fileID: -1989760260, guid: 003360f7f20c47146bd7e73994070141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   facilitatorIP: noblewhale.com

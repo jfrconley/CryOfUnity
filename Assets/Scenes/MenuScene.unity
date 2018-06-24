@@ -152,48 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_PlayScene
-      value: GameScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_OfflineScene
-      value: MenuScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_LobbyScene
-      value: MenuScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_LobbyPlayerPrefab
-      value: 
-      objectReference: {fileID: 114288370230726192, guid: 2a986e1a85638144eb331a1e5c3364af,
-        type: 2}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_GamePlayerPrefab
-      value: 
-      objectReference: {fileID: 1389985889083714, guid: bce7c57e62282ec4e839e833cea402b7,
-        type: 2}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_UseSimulator
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_SimulatedLatency
-      value: 53
-      objectReference: {fileID: 0}
-    - target: {fileID: 114184927265486602, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9,
-        type: 2}
-      propertyPath: m_PacketLossPercentage
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc25b8fd18a4c0e46a9ef5a92453a1b9, type: 2}
   m_IsPrefabParent: 0
