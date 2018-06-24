@@ -6,42 +6,48 @@ using UnityEngine;
 public class PlayerInputControl : MonoBehaviour
 {
     //Component References
-    private PlayerGunControl gunControl;
-	private new Rigidbody2D rigidbody;
+    private PlayerGunControl _gunControl;
+	private new Rigidbody2D _rigidbody;
+	private PlayerNetworkManager _networkManager;
 	
 	//Serialized
 	[SerializeField] private float moveSpeed = 1;
 	
 	private void Awake () {
-        gunControl = gameObject.GetComponent<PlayerGunControl>();
-        rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _gunControl = gameObject.GetComponent<PlayerGunControl>();
+        _rigidbody = gameObject.GetComponent<Rigidbody2D>();
+		_networkManager = gameObject.GetComponent<PlayerNetworkManager>();
 	}
 	
 	private void Update ()
 	{
-        //Movement
-		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-		rigidbody.velocity = input * moveSpeed * 100 * Time.deltaTime;
+		// Check if we are a local player
+		if (_networkManager.isLocalPlayer)
+		{
+			//Movement
+			Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+			_rigidbody.velocity = input * moveSpeed * 100 * Time.deltaTime;
 
-        //Weapon Input
-        if (Input.GetButtonDown("Fire1"))
-        {
-            gunControl.TriggerDown();
-        }
-        else if (Input.GetButton("Fire1"))
-        {
-            gunControl.TriggerHeld();
-        }
+			//Weapon Input
+			if (Input.GetButtonDown("Fire1"))
+			{
+				_gunControl.TriggerDown();
+			}
+			else if (Input.GetButton("Fire1"))
+			{
+				_gunControl.TriggerHeld();
+			}
 
-        //Look Rotation
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-        {
+			//Look Rotation
+			RaycastHit hit;
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+			{
 
-            Vector3 target = hit.point;
-            target.z = 0;
-            Vector3 dir = (transform.position - target).normalized;
-            transform.up = dir;
-        }
+				Vector3 target = hit.point;
+				target.z = 0;
+				Vector3 dir = (transform.position - target).normalized;
+				transform.up = dir;
+			}
+		}
     }
 }

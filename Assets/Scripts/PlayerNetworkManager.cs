@@ -5,8 +5,8 @@ using UnityEngine.Networking;
 
 public class PlayerNetworkManager : NetworkBehaviour
 {
-//	[SyncVar (hook = "SetPlayerId")]
-	public string PlayerId;
+	[SyncVar (hook = "UpdateName")]
+	public string PlayerId = "";
 
 	public TextMesh DebugText;
 	public Collider2D collider;
@@ -14,20 +14,17 @@ public class PlayerNetworkManager : NetworkBehaviour
 	private bool IsInit = false;
 	private GameNetworkManager _manager;
 
-	private void Awake()
-	{
-//		DebugText = gameObject.GetComponent<TextMesh>();
-	}
-
 	// Use this for initialization
 	void Start ()
 	{		
+		// If we are local, set the layer to allow object collisions
 		if (isLocalPlayer)
 		{
 			gameObject.layer = LayerMask.NameToLayer("Player");
 		}
 	}
 
+	// Requests id from server when ready
 	private void Init()
 	{
 		if (isLocalPlayer && _manager == null && GameNetworkManager.Singleton != null && !IsInit)
@@ -38,6 +35,17 @@ public class PlayerNetworkManager : NetworkBehaviour
 			CmdRequestName();
 		}
 	}
+
+	// Handle initial state sync for late clients
+	public override void OnStartClient()
+	{
+		base.OnStartClient();
+		// If our name is already set, we need to update cause the hook probably didn't run
+		if (PlayerId != "")
+		{
+			UpdateName(PlayerId);
+		}
+	}
 	
 	private void UpdateDebugText()
 	{
@@ -46,11 +54,14 @@ public class PlayerNetworkManager : NetworkBehaviour
 	
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		// Check if we are local and we hit a prop
 		if (isLocalPlayer && other.gameObject.layer == LayerMask.NameToLayer("SceneProps"))
 		{
+			// Make sure we don't already own it
 			NeutralNetworkManager objectManager = other.gameObject.GetComponent<NeutralNetworkManager>();
 			if (objectManager != null && objectManager.TouchingPlayer != PlayerId)
 			{
+				// Request box authority
 				Debug.Log("Requesting Box authority for local player");
 				CmdRequestObjectAuthority(objectManager.ObjectId);
 			}
@@ -63,26 +74,23 @@ public class PlayerNetworkManager : NetworkBehaviour
 		_manager.SetObjectAuthority(PlayerId, objectId);
 	}
 
-//	public override void OnStartAuthority()
-//	{
-//		Debug.Log("Requesting player name");
-//		_manager = GameNetworkManager.Singleton;
-//		CmdRequestName();
-//	}
 	private void Update()
 	{
 		Init();
 	}
 
+	// Generate a uuid and tell players to update
 	[Command]
 	private void CmdRequestName()
 	{
 		Debug.Log("Setting player name");
 		string name = "player:" + System.Guid.NewGuid();
-		UpdateName(name);
-		RpcSetPlayerId(name);
+//		UpdateName(name);
+//		RpcSetPlayerId(name);
+		PlayerId = name;
 	}
 
+	// Set name and register with manager
 	private void UpdateName(string id)
 	{
 		_manager = GameNetworkManager.Singleton;
