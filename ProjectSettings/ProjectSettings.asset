@@ -645,7 +645,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 2a8b9342-d873-48e5-9823-56a5a0747b51
   projectName: CryOfWar
   organizationId: red-goblin
