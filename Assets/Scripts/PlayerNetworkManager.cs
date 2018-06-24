@@ -85,8 +85,6 @@ public class PlayerNetworkManager : NetworkBehaviour
 	{
 		Debug.Log("Setting player name");
 		string name = "player:" + System.Guid.NewGuid();
-//		UpdateName(name);
-//		RpcSetPlayerId(name);
 		PlayerId = name;
 	}
 
@@ -105,7 +103,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 	{
 		UpdateName(id);
 	}
-
+	
 	private void OnDestroy()
 	{
 		if (_manager != null)

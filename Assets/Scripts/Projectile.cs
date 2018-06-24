@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,10 @@ public class Projectile : MonoBehaviour {
 
     [SerializeField] GameObject bulletImpactPrefab;
     int damage = 1;
+
+    public string BulletId;
+    public string PlayerId;
+    private PlayerGunControl _gunControl;
     
     float bulletSpeed = 60f;
     float physicsHitMultiplier = 1f;
@@ -15,11 +20,15 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject, 10f);
     }
 
-    public void SetBulletVars(int dmg, float speed, float physics)
+    public void SetBulletVars(string type, string bulletId, string playerId, PlayerGunControl gunControl)
     {
-        damage = dmg;
-        bulletSpeed = speed;
-        physicsHitMultiplier = physics;
+        _gunControl = gunControl;
+        GunSettings gunInfo = GunLocker.singleton.GetGunInfo(type);
+        BulletId = bulletId;
+        PlayerId = playerId;
+        damage = gunInfo.damage;
+        bulletSpeed = gunInfo.bulletSpeed;
+        physicsHitMultiplier = gunInfo.physicsHitMultiplier;
     }
 
     private void Update()
@@ -47,5 +56,13 @@ public class Projectile : MonoBehaviour {
         Destroy(bulletHit, 5f);
 
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (_gunControl.isLocalPlayer)
+        {
+            _gunControl.CmdDeregisterBullet(BulletId);
+        }
     }
 }

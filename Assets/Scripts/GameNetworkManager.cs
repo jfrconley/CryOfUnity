@@ -9,6 +9,7 @@ public class GameNetworkManager : NetworkBehaviour
     public static GameNetworkManager Singleton;
     private readonly Dictionary<string, PlayerNetworkManager> _playerMap = new Dictionary<string, PlayerNetworkManager>();
     private readonly Dictionary<string, NeutralNetworkManager> _objectMap = new Dictionary<string, NeutralNetworkManager>();
+    private readonly Dictionary<string, Projectile> _bulletMap = new Dictionary<string, Projectile>();
 
     private void Awake()
     {
@@ -22,6 +23,21 @@ public class GameNetworkManager : NetworkBehaviour
         Singleton = this;
     }
 
+    public void RegisterBullet(string id, Projectile bullet)
+    {
+        Debug.Log($"Registering bullet {bullet.BulletId} for player {bullet.PlayerId}");
+        _bulletMap[id] = bullet;
+    }
+
+    public void DeregisterBullet(string id)
+    {
+        if (_bulletMap.ContainsKey(id))
+        {
+            Debug.Log($"Deregistering bullet {id}");
+            _bulletMap.Remove(id);
+        }
+    }
+    
     public void RegisterPlayer(string id, PlayerNetworkManager manager)
     {
         try
