@@ -11,8 +11,8 @@ public class NeutralNetworkManager : NetworkBehaviour
     [SyncVar (hook = "SetObjectId")] public string ObjectId = "";
 
     public TextMesh DebugText;
-    public Collider2D collider;
-    public Rigidbody2D rigidbody;
+    public new Collider collider;
+    public new Rigidbody rigidbody;
     public NetworkIdentity NetworkIdentity;
     private GameNetworkManager _manager;
     
@@ -39,7 +39,7 @@ public class NeutralNetworkManager : NetworkBehaviour
 //        }
 //    }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("SceneProps") && hasAuthority && TouchingPlayer != "")
         {
