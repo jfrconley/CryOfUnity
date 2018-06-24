@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4972584416203940}
   - component: {fileID: 114184927265486602}
   - component: {fileID: 114729128389513432}
-  - component: {fileID: 114607130801799662}
+  - component: {fileID: 114014675763496100}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -42,6 +42,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114014675763496100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402170134267338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1989760260, guid: 003360f7f20c47146bd7e73994070141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facilitatorIP: noblewhale.com
+  facilitatorPort: 61111
+  facilitatorTimeOut: 10
+  facilitatorRetryAttempts: 3
+  portForwardingEnabled: 1
+  portForwardingTimeOut: 10
+  punchthroughTimeout: 30
 --- !u!114 &114184927265486602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,24 +162,6 @@ MonoBehaviour:
   m_LobbyScene: MenuScene
   m_PlayScene: GameScene
   lobbySlots: []
---- !u!114 &114607130801799662
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402170134267338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1989760260, guid: 003360f7f20c47146bd7e73994070141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facilitatorIP: noblewhale.com
-  facilitatorPort: 61111
-  facilitatorTimeOut: 10
-  facilitatorRetryAttempts: 3
-  portForwardingEnabled: 1
-  portForwardingTimeOut: 10
-  punchthroughTimeout: 30
 --- !u!114 &114729128389513432
 MonoBehaviour:
   m_ObjectHideFlags: 1

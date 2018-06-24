@@ -9,8 +9,8 @@ public class PlayerNetworkManager : NetworkBehaviour
 	public string PlayerId = "";
 
 	public TextMesh DebugText;
-	public Collider2D collider;
-	public Rigidbody2D rigidbody;
+	public new Collider collider;
+	public new Rigidbody rigidbody;
 	private bool IsInit = false;
 	private GameNetworkManager _manager;
 
@@ -52,7 +52,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 		DebugText.text = "PlayerID: " + PlayerId;
 	}
 	
-	private void OnCollisionEnter2D(Collision2D other)
+	private void OnCollisionEnter(Collision other)
 	{
 		// Check if we are local and we hit a prop
 		if (isLocalPlayer && other.gameObject.layer == LayerMask.NameToLayer("SceneProps"))

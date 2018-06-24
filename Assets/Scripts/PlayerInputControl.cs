@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerInputControl : MonoBehaviour
 {
     //Component References
     private PlayerGunControl _gunControl;
-	private new Rigidbody2D _rigidbody;
+	private new Rigidbody rigidbody;
 	private PlayerNetworkManager _networkManager;
 	
 	//Serialized
@@ -15,7 +15,7 @@ public class PlayerInputControl : MonoBehaviour
 	
 	private void Awake () {
         _gunControl = gameObject.GetComponent<PlayerGunControl>();
-        _rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody = gameObject.GetComponent<Rigidbody>();
 		_networkManager = gameObject.GetComponent<PlayerNetworkManager>();
 	}
 	
@@ -25,8 +25,8 @@ public class PlayerInputControl : MonoBehaviour
 		if (_networkManager.isLocalPlayer)
 		{
 			//Movement
-			Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-			_rigidbody.velocity = input * moveSpeed * 100 * Time.deltaTime;
+			Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+			rigidbody.velocity = input * moveSpeed * 100 * Time.deltaTime;
 
 			//Weapon Input
 			if (Input.GetButtonDown("Fire1"))
@@ -44,9 +44,9 @@ public class PlayerInputControl : MonoBehaviour
 			{
 
 				Vector3 target = hit.point;
-				target.z = 0;
-				Vector3 dir = (transform.position - target).normalized;
-				transform.up = dir;
+				target.y = 0;
+				Vector3 dir = (target - transform.position).normalized;
+				transform.forward = dir;
 			}
 		}
     }

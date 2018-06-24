@@ -15,26 +15,36 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject, 10f);
     }
 
-    private void Update()
+    public void SetBulletVars(int dmg, float speed, float physics)
     {
-        transform.position += transform.forward * bulletSpeed * Time.deltaTime;
-
-        float delta = Time.deltaTime;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.forward, bulletSpeed * delta);
-        if (hit.collider == null)
-            return;
-        Hit(hit);
+        damage = dmg;
+        bulletSpeed = speed;
+        physicsHitMultiplier = physics;
     }
 
-    private void Hit (RaycastHit2D hit)
+    private void Update()
+    {
+        float delta = Time.deltaTime;
+
+        transform.position += transform.forward * bulletSpeed * delta;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, bulletSpeed * delta))
+        {
+            Hit(hit);
+        }
+    }
+
+    private void Hit (RaycastHit hit)
     {
         //get health, do damage
-        Rigidbody2D r = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+        Rigidbody r = hit.collider.gameObject.GetComponent<Rigidbody>();
         if (r != null)
             r.AddForceAtPosition(transform.forward * (bulletSpeed * physicsHitMultiplier), hit.point);
 
-        GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.Euler(-hit.normal));
-        //Destroy(bulletHit, 3f);
+        GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.identity);
+        bulletHit.transform.forward = hit.normal;
+        Destroy(bulletHit, 5f);
 
         Destroy(gameObject);
     }
