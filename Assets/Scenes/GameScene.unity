@@ -361,6 +361,79 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b95d6b09f9363254f89f2b469e4b447e, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1156992379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1156992382}
+  - component: {fileID: 1156992381}
+  - component: {fileID: 1156992380}
+  m_Layer: 0
+  m_Name: GunLocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1156992380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1156992379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea1d973da2919b419e01c4eed262a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSettings:
+  - name: Pistol
+    fireMode: 0
+    mesh: {fileID: 0}
+    material: {fileID: 0}
+    damage: 20
+    fireRate: 0.2
+    bulletSpeed: 60
+    physicsHitMultiplier: 20
+    bulletSpread: 5
+    magazineSize: 6
+    reloadTime: 1
+    bulletPrefab: {fileID: 1796749963149706, guid: 061404bc873e1bc47ad3e9f305e4bc51,
+      type: 2}
+    muzzleFlashPrefab: {fileID: 1584403288528622, guid: 24cdef2780d093d4c849bc53f1dca256,
+      type: 2}
+    muzzleTimer: 0.4
+    shootSound: {fileID: 0}
+    emptySound: {fileID: 0}
+    reloadSound: {fileID: 0}
+    movementSound: []
+--- !u!114 &1156992381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1156992379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97294252f2e352048abc148163eaeea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1156992382
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1156992379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0063493, y: -2.6058218, z: -7.0614996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1581586749
 GameObject:
   m_ObjectHideFlags: 0
