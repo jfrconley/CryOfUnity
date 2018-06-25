@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioLibrary))]
 public class AudioManager : MonoBehaviour {
 
-    public static AudioManager instance;
+    public static AudioManager singleton;
     private AudioLibrary library;
     [SerializeField] bool persistentAudioSources = false;
 
@@ -18,11 +18,11 @@ public class AudioManager : MonoBehaviour {
 
     void Awake()
     {
-        if (instance != null)
+        if (singleton != null)
             Destroy(gameObject);
         else
         {
-            instance = this;
+            singleton = this;
             library = GetComponent<AudioLibrary>();
             StartCoroutine(CheckPlayingAudio());
         }
@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour {
     public void PlayFootstep(Vector3 position)
     {
         RaycastHit hit;
-        if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit))
+        if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit, float.MaxValue, 1<<0))
         {
             PhysicMaterial mat = hit.collider.material;
             string matName = mat.name;

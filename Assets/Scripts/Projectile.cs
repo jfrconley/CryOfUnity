@@ -42,7 +42,7 @@ public class Projectile : MonoBehaviour {
         if (r != null)
             r.AddForceAtPosition(transform.forward * (bulletSpeed * physicsHitMultiplier), hit.point);
 
-        GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.identity);
+        GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.identity, hit.collider.transform);
         bulletHit.transform.forward = hit.normal;
         Destroy(bulletHit, 5f);
 

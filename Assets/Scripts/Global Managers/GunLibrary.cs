@@ -52,6 +52,7 @@ public class GunSettings
     public GameObject bulletPrefab;
     public GameObject muzzleFlashPrefab;
     public float muzzleTimer;
+    public float recoil;
 
     [Header("Audio")]
     public AudioClip shootSound;

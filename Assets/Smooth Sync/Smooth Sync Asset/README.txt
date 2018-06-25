@@ -15,7 +15,7 @@ Supports Windows, OSX, Linux, iOS, Android, Windows Phone, Xbox, PlayStation, Ni
 
 1. Put the SmoothSync script onto any parent networked object that you want to be smoother. 
 2. It will automatically sync the object it is on. 
-     *In order to sync a child object, you must have two instances of 
+     *In order to sync a child object, you must have two singletons of 
    SmoothSync on the parent. Set childObjectToSync on one of them to point to the child you want to sync, and leave 
    it blank on the other one to sync the parent. You cannot sync children without syncing the parent.
 3. It is now smoothy synced across the network. 

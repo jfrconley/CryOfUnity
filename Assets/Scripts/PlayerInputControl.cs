@@ -9,24 +9,48 @@ public class PlayerInputControl : MonoBehaviour
     private PlayerGunControl _gunControl;
 	private new Rigidbody rigidbody;
 	private PlayerNetworkManager _networkManager;
-	
+    private Camera cam;
+
 	//Serialized
 	[SerializeField] private float moveSpeed = 1;
+    [SerializeField] private float footstepTimer = 0.4f;
+    private float footstep;
 	
 	private void Awake () {
         _gunControl = gameObject.GetComponent<PlayerGunControl>();
         rigidbody = gameObject.GetComponent<Rigidbody>();
 		_networkManager = gameObject.GetComponent<PlayerNetworkManager>();
+        cam = Camera.main;
+
+        footstep = footstepTimer;
 	}
-	
-	private void Update ()
+
+    private void Start()
+    {
+        if (_networkManager.isLocalPlayer)
+        {
+            CameraControl.singleton.PlayerTarget = transform;
+        }
+    }
+
+    private void Update ()
 	{
 		// Check if we are a local player
 		if (_networkManager.isLocalPlayer)
 		{
+            float delta = Time.deltaTime;
 			//Movement
 			Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-			rigidbody.velocity = input * moveSpeed * 100 * Time.deltaTime;
+			rigidbody.velocity = input * moveSpeed * 100 * delta;
+            if (input != Vector3.zero)
+            {
+                footstep -= delta;
+                if (footstep <= 0)
+                {
+                    AudioManager.singleton.PlayFootstep(transform.position);
+                    footstep = footstepTimer;
+                }
+            }
 
 			//Weapon Input
 			if (Input.GetButtonDown("Fire1"))
@@ -38,16 +62,13 @@ public class PlayerInputControl : MonoBehaviour
 				_gunControl.TriggerHeld();
 			}
 
-			//Look Rotation
-			RaycastHit hit;
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-			{
-
-				Vector3 target = hit.point;
-				target.y = 0;
-				Vector3 dir = (target - transform.position).normalized;
-				transform.forward = dir;
-			}
+            //Look Rotation
+            //Screenpos method
+            Vector3 v = Input.mousePosition;
+            v.z = cam.transform.position.y;
+            Vector3 target = cam.ScreenToWorldPoint(v);
+            Vector3 dir = (target - transform.position).normalized;
+            transform.forward = dir;
 		}
     }
 }

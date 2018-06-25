@@ -307,7 +307,7 @@ namespace Smooth
         /// <summary>Child object to sync</summary>
         /// <remarks>
         /// Leave blank if you want to sync this object. 
-        /// In order to sync a child object, you must add two instances of SmoothSync to the parent. 
+        /// In order to sync a child object, you must add two singletons of SmoothSync to the parent. 
         /// Set childObjectToSync on one of them to point to the child you want to sync and leave it blank on the other to sync the parent.
         /// You cannot sync children without syncing the parent.
         /// </remarks>

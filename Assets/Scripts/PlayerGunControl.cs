@@ -88,7 +88,9 @@ public class PlayerGunControl : NetworkBehaviour
         GameObject flash = Instantiate(currentGunSetting.muzzleFlashPrefab, bulletSpawn.position, bulletSpawn.rotation, bulletSpawn);
         Destroy(flash, currentGunSetting.muzzleTimer);
 
-        GameObject go = Instantiate(currentGunSetting.bulletPrefab, position, rotation * offset);
+        AudioManager.singleton.PlaySound(currentGunSetting.shootSound, bulletSpawn.position, Random.Range(0.8f, 1.2f));
+
+        /*GameObject go = */Instantiate(currentGunSetting.bulletPrefab, position, rotation * offset);
     }
     
     void Shoot()
@@ -96,6 +98,7 @@ public class PlayerGunControl : NetworkBehaviour
         if (currentGun.Type != "" && isLocalPlayer)
         {
             cooldown = currentGunSetting.fireRate;
+            CameraControl.singleton.CameraShake(currentGunSetting.recoil, currentGunSetting.fireRate);
             //ammo
 
             //MuzzleFlash

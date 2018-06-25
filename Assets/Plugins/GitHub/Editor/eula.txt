@@ -84,10 +84,10 @@ GitHub reserves the right at any time and from time to time to modify or discont
 			MISCELLANEA
 
   1. If you configure the Software to work with one or more accounts
-      on the GitHub.com website or with an instance of GitHub Enterprise,
+      on the GitHub.com website or with an singleton of GitHub Enterprise,
       your use of the Software will also be governed by the GitHub.com
       website Terms of Service and/or the license agreement applicable to
-      your instance of GitHub Enterprise.
+      your singleton of GitHub Enterprise.
 
  2. The failure of GitHub to exercise or enforce any right or provision
      of this EULA shall not constitute a waiver of such right or provision.

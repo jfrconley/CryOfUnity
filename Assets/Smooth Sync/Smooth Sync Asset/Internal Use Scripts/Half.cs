@@ -63,37 +63,37 @@ namespace System
 
         #region Constructors
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified single-precision floating-point number.
+        /// Initializes a new singleton of System.Half to the value of the specified single-precision floating-point number.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(float value) { this = HalfHelper.SingleToHalf(value); }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 32-bit signed integer.
+        /// Initializes a new singleton of System.Half to the value of the specified 32-bit signed integer.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(int value) : this((float)value) { }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 64-bit signed integer.
+        /// Initializes a new singleton of System.Half to the value of the specified 64-bit signed integer.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(long value) : this((float)value) { }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified double-precision floating-point number.
+        /// Initializes a new singleton of System.Half to the value of the specified double-precision floating-point number.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(double value) : this((float)value) { }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified decimal number.
+        /// Initializes a new singleton of System.Half to the value of the specified decimal number.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(decimal value) : this((float)value) { }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 32-bit unsigned integer.
+        /// Initializes a new singleton of System.Half to the value of the specified 32-bit unsigned integer.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(uint value) : this((float)value) { }
         /// <summary>
-        /// Initializes a new instance of System.Half to the value of the specified 64-bit unsigned integer.
+        /// Initializes a new singleton of System.Half to the value of the specified 64-bit unsigned integer.
         /// </summary>
         /// <param name="value">The value to represent as a System.Half.</param>
         public Half(ulong value) : this((float)value) { }
@@ -190,14 +190,14 @@ namespace System
         /// <returns>The System.Half result of half1 by half2.</returns>
         public static Half operator /(Half half1, Half half2) { return (Half)((float)half1 / (float)half2); }
         /// <summary>
-        /// Returns a value indicating whether two instances of System.Half are equal.
+        /// Returns a value indicating whether two singletons of System.Half are equal.
         /// </summary>
         /// <param name="half1">A System.Half.</param>
         /// <param name="half2">A System.Half.</param>
         /// <returns>true if half1 and half2 are equal; otherwise, false.</returns>
         public static bool operator ==(Half half1, Half half2) { return (!IsNaN(half1) && (half1.internalValue == half2.internalValue)); }
         /// <summary>
-        /// Returns a value indicating whether two instances of System.Half are not equal.
+        /// Returns a value indicating whether two singletons of System.Half are not equal.
         /// </summary>
         /// <param name="half1">A System.Half.</param>
         /// <param name="half2">A System.Half.</param>
@@ -381,13 +381,13 @@ namespace System
         #endregion
 
         /// <summary>
-        /// Compares this instance to a specified System.Half object.
+        /// Compares this singleton to a specified System.Half object.
         /// </summary>
         /// <param name="other">A System.Half object.</param>
         /// <returns>
-        /// A signed number indicating the relative values of this instance and value.
-        /// Return Value Meaning Less than zero This instance is less than value. Zero
-        /// This instance is equal to value. Greater than zero This instance is greater than value.
+        /// A signed number indicating the relative values of this singleton and value.
+        /// Return Value Meaning Less than zero This singleton is less than value. Zero
+        /// This singleton is equal to value. Greater than zero This singleton is greater than value.
         /// </returns>
         public int CompareTo(Half other)
         {            
@@ -415,13 +415,13 @@ namespace System
             return result;
         }
         /// <summary>
-        /// Compares this instance to a specified System.Object.
+        /// Compares this singleton to a specified System.Object.
         /// </summary>
         /// <param name="obj">An System.Object or null.</param>
         /// <returns>
-        /// A signed number indicating the relative values of this instance and value.
-        /// Return Value Meaning Less than zero This instance is less than value. Zero
-        /// This instance is equal to value. Greater than zero This instance is greater
+        /// A signed number indicating the relative values of this singleton and value.
+        /// Return Value Meaning Less than zero This singleton is less than value. Zero
+        /// This singleton is equal to value. Greater than zero This singleton is greater
         /// than value. -or- value is null.
         /// </returns>
         /// <exception cref="System.ArgumentException">value is not a System.Half</exception>
@@ -447,20 +447,20 @@ namespace System
             return result;
         }
         /// <summary>
-        /// Returns a value indicating whether this instance and a specified System.Half object represent the same value.
+        /// Returns a value indicating whether this singleton and a specified System.Half object represent the same value.
         /// </summary>
-        /// <param name="other">A System.Half object to compare to this instance.</param>
-        /// <returns>true if value is equal to this instance; otherwise, false.</returns>
+        /// <param name="other">A System.Half object to compare to this singleton.</param>
+        /// <returns>true if value is equal to this singleton; otherwise, false.</returns>
         public bool Equals(Half other)
         {
             return ((other == this) || (IsNaN(other) && IsNaN(this)));
         }
         /// <summary>
-        /// Returns a value indicating whether this instance and a specified System.Object
+        /// Returns a value indicating whether this singleton and a specified System.Object
         /// represent the same type and value.
         /// </summary>
         /// <param name="obj">An System.Object.</param>
-        /// <returns>true if value is a System.Half and equal to this instance; otherwise, false.</returns>
+        /// <returns>true if value is a System.Half and equal to this singleton; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             bool result = false;
@@ -476,7 +476,7 @@ namespace System
             return result;
         }
         /// <summary>
-        /// Returns the hash code for this instance.
+        /// Returns the hash code for this singleton.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
@@ -503,7 +503,7 @@ namespace System
             return BitConverter.GetBytes(value.internalValue);
         }
         /// <summary>
-        /// Converts the value of a specified instance of System.Half to its equivalent binary representation.
+        /// Converts the value of a specified singleton of System.Half to its equivalent binary representation.
         /// </summary>
         /// <param name="value">A System.Half value.</param>
         /// <returns>A 16-bit unsigned integer that contain the binary representation of value.</returns>        
@@ -777,39 +777,39 @@ namespace System
             return parseResult;
         }
         /// <summary>
-        /// Converts the numeric value of this instance to its equivalent string representation.
+        /// Converts the numeric value of this singleton to its equivalent string representation.
         /// </summary>
-        /// <returns>A string that represents the value of this instance.</returns>
+        /// <returns>A string that represents the value of this singleton.</returns>
         public override string ToString()
         {
             return ((float)this).ToString(CultureInfo.InvariantCulture);
         }
         /// <summary>
-        /// Converts the numeric value of this instance to its equivalent string representation
+        /// Converts the numeric value of this singleton to its equivalent string representation
         /// using the specified culture-specific format information.
         /// </summary>
         /// <param name="formatProvider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
-        /// <returns>The string representation of the value of this instance as specified by provider.</returns>
+        /// <returns>The string representation of the value of this singleton as specified by provider.</returns>
         public string ToString(IFormatProvider formatProvider)
         {
             return ((float)this).ToString(formatProvider);
         }
         /// <summary>
-        /// Converts the numeric value of this instance to its equivalent string representation, using the specified format.
+        /// Converts the numeric value of this singleton to its equivalent string representation, using the specified format.
         /// </summary>
         /// <param name="format">A numeric format string.</param>
-        /// <returns>The string representation of the value of this instance as specified by format.</returns>
+        /// <returns>The string representation of the value of this singleton as specified by format.</returns>
         public string ToString(string format)
         {
             return ((float)this).ToString(format, CultureInfo.InvariantCulture);
         }
         /// <summary>
-        /// Converts the numeric value of this instance to its equivalent string representation 
+        /// Converts the numeric value of this singleton to its equivalent string representation 
         /// using the specified format and culture-specific format information.
         /// </summary>
         /// <param name="format">A numeric format string.</param>
         /// <param name="formatProvider">An System.IFormatProvider that supplies culture-specific formatting information.</param>
-        /// <returns>The string representation of the value of this instance as specified by format and provider.</returns>
+        /// <returns>The string representation of the value of this singleton as specified by format and provider.</returns>
         /// <exception cref="System.FormatException">format is invalid.</exception>
         public string ToString(string format, IFormatProvider formatProvider)
         {
