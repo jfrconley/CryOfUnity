@@ -5,8 +5,10 @@ using UnityEngine.Networking;
 
 public class PlayerNetworkManager : NetworkBehaviour
 {
-	[SyncVar (hook = "UpdateName")]
+	[SyncVar (hook = nameof(UpdateName))]
 	public string PlayerId = "";
+
+	[SyncVar] public float Health = 100;
 
 	public TextMesh DebugText;
 	public new Collider collider;
@@ -21,6 +23,10 @@ public class PlayerNetworkManager : NetworkBehaviour
 		if (isLocalPlayer)
 		{
 			gameObject.layer = LayerMask.NameToLayer("Player");
+		}
+		else
+		{
+			gameObject.layer = LayerMask.NameToLayer("RemotePlayer");
 		}
 	}
 

@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Smooth;
 using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(NetworkIdentity))]
+[RequireComponent(typeof(SmoothSync))]
 //[RequireComponent(typeof(TextMesh))]
 public class NeutralNetworkManager : NetworkBehaviour
 {
@@ -15,9 +17,11 @@ public class NeutralNetworkManager : NetworkBehaviour
     public new Rigidbody rigidbody;
     public NetworkIdentity NetworkIdentity;
     private GameNetworkManager _manager;
+    private SmoothSync _smoothSync;
     
     private void Awake()
     {
+        _smoothSync = gameObject.GetComponent<SmoothSync>();
         NetworkIdentity = gameObject.GetComponent<NetworkIdentity>();
 //        DebugText = gameObject.GetComponent<TextMesh>();
     }
@@ -100,6 +104,7 @@ public class NeutralNetworkManager : NetworkBehaviour
     private void UpdateTouchingPlayer(string playerId)
     {
         TouchingPlayer = playerId;
+        _smoothSync.clearBuffer();
         UpdateDebugText();
     }
     

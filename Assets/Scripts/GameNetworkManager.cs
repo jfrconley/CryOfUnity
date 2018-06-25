@@ -37,6 +37,11 @@ public class GameNetworkManager : NetworkBehaviour
             _bulletMap.Remove(id);
         }
     }
+
+    public Projectile GetBullet(string id)
+    {
+        return _bulletMap[id];
+    }
     
     public void RegisterPlayer(string id, PlayerNetworkManager manager)
     {
@@ -85,7 +90,7 @@ public class GameNetworkManager : NetworkBehaviour
     [Server]
     public void SetObjectAuthority(string playerId, string objectId)
     {
-        Debug.Log("Granting authority for " + objectId + " to " + playerId);
+        Debug.Log($"Granting authority for {objectId} to {playerId}");
         NeutralNetworkManager objectManager = GetObject(objectId);
         RemoveObjectAuthority(objectId);
         objectManager.NetworkIdentity.AssignClientAuthority(GetPlayer(playerId).connectionToClient);

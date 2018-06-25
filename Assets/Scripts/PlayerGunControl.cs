@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayerNetworkManager))]
 public class PlayerGunControl : NetworkBehaviour
 {
-    [SyncVar (hook = "UpdateGun")] private GunLocker.GunState currentGun;
+    [SyncVar (hook = nameof(UpdateGun))] private GunLocker.GunState currentGun;
     GunSettings currentGunSetting;
     private PlayerNetworkManager _networkManager;
     [SerializeField] Transform bulletSpawn;
@@ -73,15 +73,29 @@ public class PlayerGunControl : NetworkBehaviour
     }
 
     [Command]
-    public void CmdDeregisterBullet(string id)
+    public void CmdSendBulletHit(string bulletId, string hitPlayerId)
+    {
+        Projectile bullet = GameNetworkManager.Singleton.GetBullet(bulletId);
+        GameNetworkManager.Singleton.DeregisterBullet(bulletId);
+        GameNetworkManager.Singleton.GetPlayer(hitPlayerId).Health -= bullet.damage;
+        RpcDeregisterBullet(bulletId, false);
+        Debug.Log($"Player {bullet.PlayerId} hit {hitPlayerId} with {bulletId}");
+    }
+
+    [Command]
+    public void CmdDeregisterBullet(string id, bool destroy)
     {
         GameNetworkManager.Singleton.DeregisterBullet(id);
-        RpcDeregisterBullet(id);
+        RpcDeregisterBullet(id, destroy);
     }
 
     [ClientRpc]
-    public void RpcDeregisterBullet(string id)
+    public void RpcDeregisterBullet(string id, bool destroy)
     {
+        if (destroy)
+        {
+            Destroy(GameNetworkManager.Singleton.GetBullet(id).gameObject);
+        }
         GameNetworkManager.Singleton.DeregisterBullet(id);
     }
     
