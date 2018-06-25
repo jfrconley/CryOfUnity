@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayerNetworkManager))]
 public class PlayerGunControl : NetworkBehaviour
 {
-    [SyncVar (hook = "UpdateGun")] private GunLocker.GunState currentGun;
+    [SyncVar (hook = nameof(UpdateGun))] private GunLocker.GunState currentGun;
     GunSettings currentGunSetting;
     private PlayerNetworkManager _networkManager;
     [SerializeField] Transform bulletSpawn;
@@ -28,6 +28,10 @@ public class PlayerGunControl : NetworkBehaviour
             Debug.Log("Requesting Starting gun Pistol");
             _isInit = true;
             CmdRequestStartingGun("Pistol");
+        }
+        else if (!isLocalPlayer && currentGun.Type != currentGunSetting?.name)
+        {
+            UpdateGun(currentGun);
         }
     }
 
@@ -69,28 +73,60 @@ public class PlayerGunControl : NetworkBehaviour
     }
 
     [Command]
-    public void CmdRequestFire(Vector3 position, Quaternion rotation, Quaternion offset)
+    public void CmdSendBulletHit(string bulletId, string hitPlayerId)
     {
-        RpcDoFire(position, rotation, offset);
+        Projectile bullet = GameNetworkManager.Singleton.GetBullet(bulletId);
+        GameNetworkManager.Singleton.DeregisterBullet(bulletId);
+        GameNetworkManager.Singleton.GetPlayer(hitPlayerId).Health -= bullet.damage;
+        RpcDeregisterBullet(bulletId, false);
+        Debug.Log($"Player {bullet.PlayerId} hit {hitPlayerId} with {bulletId}");
+    }
+
+    [Command]
+    public void CmdDeregisterBullet(string id, bool destroy)
+    {
+        GameNetworkManager.Singleton.DeregisterBullet(id);
+        RpcDeregisterBullet(id, destroy);
     }
 
     [ClientRpc]
-    public void RpcDoFire(Vector3 position, Quaternion rotation, Quaternion offset)
+    public void RpcDeregisterBullet(string id, bool destroy)
+    {
+        if (destroy)
+        {
+            Destroy(GameNetworkManager.Singleton.GetBullet(id).gameObject);
+        }
+        GameNetworkManager.Singleton.DeregisterBullet(id);
+    }
+    
+    [Command]
+    public void CmdRequestFire(string id, Vector3 position, Quaternion rotation, Quaternion offset)
+    {
+        RpcDoFire(id, position, rotation, offset);
+    }
+
+    [ClientRpc]
+    public void RpcDoFire(string id, Vector3 position, Quaternion rotation, Quaternion offset)
     {
         if (!isLocalPlayer)
         {
-            DoFire(position, rotation, offset);
+            DoFire(id, position, rotation, offset);
         }
     }
 
-    public void DoFire(Vector3 position, Quaternion rotation, Quaternion offset)
+    public void DoFire(string id, Vector3 position, Quaternion rotation, Quaternion offset)
     {
         GameObject flash = Instantiate(currentGunSetting.muzzleFlashPrefab, bulletSpawn.position, bulletSpawn.rotation, bulletSpawn);
         Destroy(flash, currentGunSetting.muzzleTimer);
-
         AudioManager.singleton.PlaySound(currentGunSetting.shootSound, bulletSpawn.position, Random.Range(0.8f, 1.2f));
+        
+        /*GameObject go = */
+        Instantiate(currentGunSetting.bulletPrefab, position, rotation * offset);
 
-        /*GameObject go = */Instantiate(currentGunSetting.bulletPrefab, position, rotation * offset);
+        GameObject go = Instantiate(currentGunSetting.bulletPrefab, position, rotation * offset);
+        Projectile bullet = go.GetComponent<Projectile>();
+        bullet.SetBulletVars(currentGun.Type, id, _networkManager.PlayerId, this);
+        GameNetworkManager.Singleton.RegisterBullet(id, bullet);
     }
     
     void Shoot()
@@ -112,9 +148,10 @@ public class PlayerGunControl : NetworkBehaviour
                     Vector3.up); //adjust upward rotation Quaternion.AngleAxis(Random.Range(-gun.bulletSpread / 2, gun.bulletSpread / 2), Vector3.right)
 //            GameObject go = Instantiate(currentGunSetting.bulletPrefab, bulletSpawn.position,
 //                bulletSpawn.rotation * rotOffset);
-            
-            CmdRequestFire(bulletSpawn.position, bulletSpawn.rotation, rotOffset);
-            DoFire(bulletSpawn.position, bulletSpawn.rotation, rotOffset);
+
+            string bulletId = $"bullet:{System.Guid.NewGuid()}";
+            CmdRequestFire(bulletId, bulletSpawn.position, bulletSpawn.rotation, rotOffset);
+            DoFire(bulletId, bulletSpawn.position, bulletSpawn.rotation, rotOffset);
         }
     
     //gun.shootSound;
