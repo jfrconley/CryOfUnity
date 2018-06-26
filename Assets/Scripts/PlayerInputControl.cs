@@ -9,15 +9,18 @@ public class PlayerInputControl : MonoBehaviour
 {
     //Component References
     private PlayerGunControl _gunControl;
-	private new Rigidbody rigidbody;
+	private Rigidbody rigidbody;
 	private PlayerNetworkManager _networkManager;
 	private SmoothSync _smoothSync;
     private Camera cam;
+    private Renderer renderer;
 
-	//Serialized
+    //Serialized
+    [SerializeField] private Material[] damageFlashes;
 	[SerializeField] private float moveSpeed = 1;
     [SerializeField] private float footstepTimer = 0.4f;
     private float footstep;
+    private Material baseMaterial;
 	
 	private void Awake ()
 	{
@@ -25,6 +28,8 @@ public class PlayerInputControl : MonoBehaviour
         _gunControl = gameObject.GetComponent<PlayerGunControl>();
         rigidbody = gameObject.GetComponent<Rigidbody>();
 		_networkManager = gameObject.GetComponent<PlayerNetworkManager>();
+        renderer = gameObject.GetComponentInChildren<Renderer>();
+        baseMaterial = renderer.material;
         cam = Camera.main;
 
         footstep = footstepTimer;
@@ -40,6 +45,9 @@ public class PlayerInputControl : MonoBehaviour
 
     private void Update ()
 	{
+        if (Input.GetKeyDown(KeyCode.P))
+            RunDamageFlash();
+
 		// Check if we are a local player
 		if (_networkManager.isLocalPlayer)
 		{
@@ -95,5 +103,22 @@ public class PlayerInputControl : MonoBehaviour
 				}
 			}
 		}
+    }
+
+    public void RunDamageFlash()
+    {
+        StartCoroutine(DamageFlash());
+    }
+
+    IEnumerator DamageFlash()
+    {
+        int i = 0;
+        while(i < damageFlashes.Length)
+        {
+            renderer.material = damageFlashes[i];
+            i++;
+            yield return new WaitForSeconds(0.03f);
+        }
+        renderer.material = baseMaterial;
     }
 }

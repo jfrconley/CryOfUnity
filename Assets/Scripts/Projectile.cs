@@ -47,22 +47,23 @@ public class Projectile : MonoBehaviour {
     {
         float delta = Time.deltaTime;
 
-        transform.position += transform.forward * bulletSpeed * delta;
-
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, bulletSpeed * delta))
         {
             Hit(hit);
         }
+
+        transform.position += transform.forward * bulletSpeed * delta;
+
     }
 
     private void Hit (RaycastHit hit)
     {
 
         int otherLayer = hit.collider.gameObject.layer;
-        //get health, do damage
         if (otherLayer == _remotePlayerLayer)
         {
+
             if (_gunControl != null && _gunControl.isLocalPlayer)
             {
                 string otherPlayerId = hit.collider.gameObject.GetComponent<PlayerNetworkManager>().PlayerId;
@@ -76,8 +77,9 @@ public class Projectile : MonoBehaviour {
             if (r != null)
                 r.AddForceAtPosition(transform.forward * (bulletSpeed * physicsHitMultiplier), hit.point);
 
-            GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.identity, hit.collider.transform);
+            GameObject bulletHit = Instantiate(bulletImpactPrefab, hit.point, Quaternion.identity);
             bulletHit.transform.forward = hit.normal;
+            bulletHit.transform.SetParent(hit.collider.transform, true);
             Destroy(bulletHit, 5f);
         }
 

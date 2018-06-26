@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1680107276234716}
+  m_IsPrefabParent: 1
+--- !u!1 &1680107276234716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4706725351722700}
+  - component: {fileID: 114633256294789432}
+  - component: {fileID: 114743171509674284}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4706725351722700
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680107276234716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -16.860117, y: 0.23535883, z: 19.802834}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114633256294789432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680107276234716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0aa50e7b5b55414d948801db4db67bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentAudioSources: 1
+  physicsMaterialPrefix: PM_
+  footstepPrefix: Footstep
+--- !u!114 &114743171509674284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680107276234716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cf46586bf6dca841aa077949614ddc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundGroups:
+  - groupID: FootstepChainlink
+    group:
+    - {fileID: 8300000, guid: 5e1a5c1806ff0ae4eb135967c746e442, type: 3}
+    - {fileID: 8300000, guid: 6f7ab4b5fb841d149a10ff926b3f3e3c, type: 3}
+    - {fileID: 8300000, guid: 88701973597ef0a4ca389df821a511b2, type: 3}
+  - groupID: FootstepConcrete
+    group:
+    - {fileID: 8300000, guid: ba1cc17215237294090923b109c16334, type: 3}
+    - {fileID: 8300000, guid: 9dfe59198ec948648bc971187a0ff783, type: 3}
+    - {fileID: 8300000, guid: be62ce9a8497ce44cb8cca846af92885, type: 3}
+    - {fileID: 8300000, guid: adb0fb570f46d7443b9e7f41d06a6dc1, type: 3}
+  - groupID: FootstepDirt
+    group:
+    - {fileID: 8300000, guid: 519b71d90c97db944bbcab3b91db8899, type: 3}
+    - {fileID: 8300000, guid: 9dd9cac2c355b5d489f00cbef63c153e, type: 3}
+    - {fileID: 8300000, guid: e03d9d7ced739c44b864e65b5e7b0204, type: 3}
+    - {fileID: 8300000, guid: 5d2f5e2a2a97dc74bbe606b38d596cb8, type: 3}
+  - groupID: FootstepDuct
+    group:
+    - {fileID: 8300000, guid: 6ca954385e58954438dc8d333f79b790, type: 3}
+    - {fileID: 8300000, guid: 5bdecc5c565b64a44b9fcf671292ed87, type: 3}
+    - {fileID: 8300000, guid: 68a0761bdebf46446b09012e8996b8cd, type: 3}
+    - {fileID: 8300000, guid: d80befd0ad5d7844c99a6ef5e3f8f8e9, type: 3}
+  - groupID: FootstepGrass
+    group:
+    - {fileID: 8300000, guid: 69e25ac2898d0d64193cb5448f4d2eec, type: 3}
+    - {fileID: 8300000, guid: d6508b151492c0f40bf4a136a8f76c75, type: 3}
+    - {fileID: 8300000, guid: ff76c61126ae0fe43ade789b66b2fea6, type: 3}
+    - {fileID: 8300000, guid: ef64cfa93a891194cb6cb15a0f751c20, type: 3}
+  - groupID: FootstepGravel
+    group:
+    - {fileID: 8300000, guid: b20b07f6f09f38a4992dd8d4496edd13, type: 3}
+    - {fileID: 8300000, guid: 60b1a5b4f66c33546903faee7f7c8b1f, type: 3}
+    - {fileID: 8300000, guid: c8893f7b9a0ca134590250b65aa7bf3e, type: 3}
+    - {fileID: 8300000, guid: aea0ee7027696df46b7c0b13ad658796, type: 3}
+  - groupID: FootstepMetal
+    group:
+    - {fileID: 8300000, guid: 70660bf290502294f9c52e59aa6569fa, type: 3}
+    - {fileID: 8300000, guid: 461aa1025069b9a4ca0c228e60cf6037, type: 3}
+    - {fileID: 8300000, guid: 7be5a9f8d76bdb14fbdb3f5a9fa5c75e, type: 3}
+    - {fileID: 8300000, guid: 25130bf992a722e47b661b737e00e7f1, type: 3}
+  - groupID: FootstepMetalGrate
+    group:
+    - {fileID: 8300000, guid: d714046526c835b4bb8b7c562b978e0f, type: 3}
+    - {fileID: 8300000, guid: bde4d5746cdace84f8d3db8a30528137, type: 3}
+    - {fileID: 8300000, guid: 001902becb3189144b28f0a53db95515, type: 3}
+    - {fileID: 8300000, guid: e3aca5f955c323648b01aadfa9ca95cd, type: 3}
+  - groupID: FootstepMud
+    group:
+    - {fileID: 8300000, guid: adbae207d0cbf43438afa7cfb6bfa520, type: 3}
+    - {fileID: 8300000, guid: c94292239fd6ba64db62290f64d32c2c, type: 3}
+    - {fileID: 8300000, guid: 3fd0b97cf04ade6498a3f99f7e2f2c24, type: 3}
+    - {fileID: 8300000, guid: bbe87bf99e2b77d48ba04c8b7e8851ee, type: 3}
+  - groupID: FootstepSand
+    group:
+    - {fileID: 8300000, guid: 84d4cfc3cb0e63e42a7dbef244e2944a, type: 3}
+    - {fileID: 8300000, guid: 6db244a90526c2f4eb97b2f8a36d7a2a, type: 3}
+    - {fileID: 8300000, guid: 914bd2304def2b64f8188228ff702c16, type: 3}
+    - {fileID: 8300000, guid: f960f269dcc89934383adc864fa1c7da, type: 3}
+  - groupID: FootstepTile
+    group:
+    - {fileID: 8300000, guid: af8780841a744e141bcd82977a119ef0, type: 3}
+    - {fileID: 8300000, guid: 289c9756a4d4ebb4ca771fe0085e0200, type: 3}
+    - {fileID: 8300000, guid: 8e4025983e06b4046836804c23316116, type: 3}
+    - {fileID: 8300000, guid: 7db7562c26597eb439341450de1c5bf6, type: 3}
+  - groupID: FootstepWood
+    group:
+    - {fileID: 8300000, guid: 95ddaf3ef69d9ec4581aa314a9c09929, type: 3}
+    - {fileID: 8300000, guid: a4b59ebbd3413194483b25bc2477a7e9, type: 3}
+    - {fileID: 8300000, guid: 28ae3bde94ca2bb4fbe017da6a3c0031, type: 3}
+    - {fileID: 8300000, guid: e0a6f37fc42a56a43af1eb4062e23d6e, type: 3}
+  - groupID: FootstepWoodPanel
+    group:
+    - {fileID: 8300000, guid: d2c23d29e8c3c604a8d76cb140b756be, type: 3}
+    - {fileID: 8300000, guid: 6c217317e9abbe44fa3cb0e13bf2b341, type: 3}
+    - {fileID: 8300000, guid: af855f261953c7643a2ff894e5c9a6c7, type: 3}
+    - {fileID: 8300000, guid: 306773fb9a719d6428a9750d4da75368, type: 3}

@@ -379,5 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1255d5463830447b0acd62e0488305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageFlashes:
+  - {fileID: 2100000, guid: 83a1b3b4498b9384b92f9c443710a83f, type: 2}
+  - {fileID: 2100000, guid: bd7eb5a9dc57aa8418f65701eb3ac601, type: 2}
   moveSpeed: 3
   footstepTimer: 0.4
