@@ -8,13 +8,16 @@ public class PlayerNetworkManager : NetworkBehaviour
 	[SyncVar (hook = nameof(UpdateName))]
 	public string PlayerId = "";
 
-	[SyncVar (hook = nameof(UpdateHealth))] public float Health = 100;
+	[SyncVar (hook = nameof(UpdateHealth))] public float Health = GameNetworkManager.MaxHealth;
+
+	[SyncVar (hook = nameof(SetDeathState))] public bool IsDead;
 
 	public TextMesh DebugText;
 	public new Collider collider;
 	public new Rigidbody rigidbody;
 	private bool IsInit = false;
 	private GameNetworkManager _manager;
+	[SerializeField] private GameObject _graphics;
 
 	// Use this for initialization
 	void Start ()
@@ -61,7 +64,71 @@ public class PlayerNetworkManager : NetworkBehaviour
 		{
 			GameCanvasManager.singleton.SetHealth(health);
 		}
+
+		if (isServer)
+		{
+			DeathCheck();
+		}
 	}
+
+	[Server]
+	public void DeathCheck()
+	{
+		if (Health <= 0)
+		{
+			ServerDie();
+		}
+	}
+
+	[Server]
+	public void ServerDie()
+	{
+		Debug.Log($"Player {PlayerId} died");
+		IsDead = true;
+		LocalDie();
+		Invoke(nameof(ServerUnDie), GameNetworkManager.RespawnTimer);
+	}
+
+	[Server]
+	public void ServerUnDie()
+	{
+		Debug.Log($"Respawning player {PlayerId}");
+		Health = GameNetworkManager.MaxHealth;
+		IsDead = false;
+		LocalUnDie();
+	}
+	
+	public void SetDeathState(bool deathState)
+	{
+		IsDead = deathState;
+		if (IsDead)
+		{
+			LocalDie();
+		}
+		else
+		{
+			LocalUnDie();
+		}
+	}
+
+	// Local effects of death set here
+	public void LocalDie()
+	{
+		Debug.Log($"Killing local player {PlayerId}");
+		_graphics.SetActive(false);
+		collider.enabled = false;
+		rigidbody.isKinematic = true;
+	}
+	
+	// Local effects of death unset here
+	public void LocalUnDie()
+	{
+		Debug.Log($"Unkilling local player {PlayerId}");
+		_graphics.SetActive(true);
+		collider.enabled = true;
+		rigidbody.isKinematic = false;
+	}
+	
 	
 	private void UpdateDebugText()
 	{

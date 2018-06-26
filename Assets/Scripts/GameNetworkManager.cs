@@ -7,6 +7,9 @@ using UnityEngine.Networking;
 public class GameNetworkManager : NetworkBehaviour
 {
     public static GameNetworkManager Singleton;
+    public static readonly float MaxHealth = 100f;
+    public static readonly float RespawnTimer = 10f;
+    
     private readonly Dictionary<string, PlayerNetworkManager> _playerMap = new Dictionary<string, PlayerNetworkManager>();
     private readonly Dictionary<string, NeutralNetworkManager> _objectMap = new Dictionary<string, NeutralNetworkManager>();
     private readonly Dictionary<string, Projectile> _bulletMap = new Dictionary<string, Projectile>();

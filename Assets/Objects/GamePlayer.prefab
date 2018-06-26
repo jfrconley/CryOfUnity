@@ -330,9 +330,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 
+  Health: 100
+  IsDead: 0
   DebugText: {fileID: 102762709891094170}
   collider: {fileID: 65511430197565528}
   rigidbody: {fileID: 54731155320396688}
+  _graphics: {fileID: 1362387128213398}
 --- !u!114 &114900829887729142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,3 +380,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  footstepTimer: 0.4

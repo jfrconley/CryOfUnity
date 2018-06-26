@@ -43,37 +43,40 @@ public class PlayerInputControl : MonoBehaviour
 		// Check if we are a local player
 		if (_networkManager.isLocalPlayer)
 		{
-            float delta = Time.deltaTime;
-			//Movement
-			Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-			rigidbody.velocity = input * moveSpeed * 100 * delta;
-            if (input != Vector3.zero)
-            {
-                footstep -= delta;
-                if (footstep <= 0)
-                {
-                    AudioManager.singleton.PlayFootstep(transform.position);
-                    footstep = footstepTimer;
-                }
-            }
-
-			//Weapon Input
-			if (Input.GetButtonDown("Fire1"))
+			if (!_networkManager.IsDead)
 			{
-				_gunControl.TriggerDown();
-			}
-			else if (Input.GetButton("Fire1"))
-			{
-				_gunControl.TriggerHeld();
-			}
+				float delta = Time.deltaTime;
+				//Movement
+				Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+				rigidbody.velocity = input * moveSpeed * 100 * delta;
+				if (input != Vector3.zero)
+				{
+					footstep -= delta;
+					if (footstep <= 0)
+					{
+						AudioManager.singleton.PlayFootstep(transform.position);
+						footstep = footstepTimer;
+					}
+				}
 
-            //Look Rotation
-            //Screenpos method
-            Vector3 v = Input.mousePosition;
-            v.z = cam.transform.position.y;
-            Vector3 target = cam.ScreenToWorldPoint(v);
-            Vector3 dir = (target - transform.position).normalized;
-            transform.forward = dir;
+				//Weapon Input
+				if (Input.GetButtonDown("Fire1"))
+				{
+					_gunControl.TriggerDown();
+				}
+				else if (Input.GetButton("Fire1"))
+				{
+					_gunControl.TriggerHeld();
+				}
+
+				//Look Rotation
+				//Screenpos method
+				Vector3 v = Input.mousePosition;
+				v.z = cam.transform.position.y;
+				Vector3 target = cam.ScreenToWorldPoint(v);
+				Vector3 dir = (target - transform.position).normalized;
+				transform.forward = dir;
+			}
 		}
 		else
 		{
