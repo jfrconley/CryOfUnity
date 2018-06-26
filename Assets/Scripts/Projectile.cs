@@ -14,12 +14,16 @@ public class Projectile : MonoBehaviour {
     private PlayerGunControl _gunControl;
 
     private int _remotePlayerLayer;
+    private int _playerLayer;
+    private int _propLayer;
     float bulletSpeed = 60f;
     float physicsHitMultiplier = 1f;
 
     private void Awake()
     {
         _remotePlayerLayer = LayerMask.NameToLayer("RemotePlayer");
+        _playerLayer = LayerMask.NameToLayer("Player");
+        _propLayer = LayerMask.NameToLayer("SceneProps");
     }
 
     private void Start()
@@ -55,17 +59,18 @@ public class Projectile : MonoBehaviour {
     private void Hit (RaycastHit hit)
     {
 
+        int otherLayer = hit.collider.gameObject.layer;
         //get health, do damage
-        if (hit.collider.gameObject.layer == _remotePlayerLayer)
+        if (otherLayer == _remotePlayerLayer)
         {
-            if (_gunControl.isLocalPlayer)
+            if (_gunControl != null && _gunControl.isLocalPlayer)
             {
                 string otherPlayerId = hit.collider.gameObject.GetComponent<PlayerNetworkManager>().PlayerId;
                 Debug.Log($"Local bullet {BulletId} hit player {otherPlayerId}");
                 _gunControl.CmdSendBulletHit(BulletId, otherPlayerId);
             }
         }
-        else
+        else if (otherLayer == _propLayer)
         {
             Rigidbody r = hit.collider.gameObject.GetComponent<Rigidbody>();
             if (r != null)
@@ -76,7 +81,10 @@ public class Projectile : MonoBehaviour {
             Destroy(bulletHit, 5f);
         }
 
-        Destroy(gameObject);
+        if (otherLayer != _playerLayer)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()

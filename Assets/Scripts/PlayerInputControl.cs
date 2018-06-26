@@ -70,5 +70,17 @@ public class PlayerInputControl : MonoBehaviour
             Vector3 dir = (target - transform.position).normalized;
             transform.forward = dir;
 		}
+		else
+		{
+			if (rigidbody.velocity != Vector3.zero)
+			{
+				footstep -= Time.deltaTime;
+				if (footstep <= 0)
+				{
+					AudioManager.singleton.PlayFootstep(transform.position);
+					footstep = footstepTimer;
+				}
+			}
+		}
     }
 }
