@@ -69,6 +69,7 @@ public class NeutralNetworkManager : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
+//        _smoothSync.teleport();
         if (ObjectId == "")
         {
             Debug.Log("Requesting object id");

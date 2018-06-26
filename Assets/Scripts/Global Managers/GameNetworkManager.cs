@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Random = UnityEngine.Random;
 
 public class GameNetworkManager : NetworkBehaviour
 {
@@ -10,6 +11,7 @@ public class GameNetworkManager : NetworkBehaviour
     public static readonly float MaxHealth = 100f;
     public static readonly float RespawnTimer = 10f;
     
+    private List<SpawnPoint> _spawnPoints;
     private readonly Dictionary<string, PlayerNetworkManager> _playerMap = new Dictionary<string, PlayerNetworkManager>();
     private readonly Dictionary<string, NeutralNetworkManager> _objectMap = new Dictionary<string, NeutralNetworkManager>();
     private readonly Dictionary<string, Projectile> _bulletMap = new Dictionary<string, Projectile>();
@@ -22,8 +24,29 @@ public class GameNetworkManager : NetworkBehaviour
             return;
         }
 
+        _spawnPoints = GetSpawnPoints();
         Debug.Log("GameManager created");
         Singleton = this;
+    }
+
+    private List<SpawnPoint> GetSpawnPoints()
+    {
+        List<SpawnPoint> pointList = new List<SpawnPoint>();
+        GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        foreach (var point in spawnPointObjects)
+        {
+            pointList.Add(point.GetComponent<SpawnPoint>());
+        }
+
+        return pointList;
+    }
+
+    // Select a spawn point for a player
+    public SpawnPoint GetSpawnPoint(string playerId)
+    {
+        // TODO: make spawn selection smarter
+        return _spawnPoints[Random.Range(0, _spawnPoints.Count)];
     }
 
     public void RegisterBullet(string id, Projectile bullet)

@@ -69,6 +69,11 @@ public class PlayerInputControl : MonoBehaviour
 					_gunControl.TriggerHeld();
 				}
 
+				if (Input.GetButton("Submit"))
+				{
+					_networkManager.UpdateHealth(0);
+				}
+
 				//Look Rotation
 				//Screenpos method
 				Vector3 v = Input.mousePosition;

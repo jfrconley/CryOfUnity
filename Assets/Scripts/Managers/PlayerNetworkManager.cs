@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Smooth;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[RequireComponent(typeof(SmoothSync))]
 public class PlayerNetworkManager : NetworkBehaviour
 {
 	[SyncVar (hook = nameof(UpdateName))]
@@ -15,9 +17,15 @@ public class PlayerNetworkManager : NetworkBehaviour
 	public TextMesh DebugText;
 	public new Collider collider;
 	public new Rigidbody rigidbody;
-	private bool IsInit = false;
+	private bool IsInit;
 	private GameNetworkManager _manager;
+	private SmoothSync _smoothSync;
 	[SerializeField] private GameObject _graphics;
+
+	private void Awake()
+	{
+		_smoothSync = gameObject.GetComponent<SmoothSync>();
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -87,8 +95,24 @@ public class PlayerNetworkManager : NetworkBehaviour
 		IsDead = true;
 		LocalDie();
 		Invoke(nameof(ServerUnDie), GameNetworkManager.RespawnTimer);
+		Vector3 spawnPosistion = _manager.GetSpawnPoint(PlayerId).GetSpawnPosistion();
+		RpcTeleport(spawnPosistion);
+//		Debug.Log($"Teleporting player {PlayerId}");
+//		transform.position = new Vector3(spawnPosistion.x, 0, spawnPosistion.z);
+//		_smoothSync.teleport();
 	}
 
+	[ClientRpc]
+	public void RpcTeleport(Vector3 position)
+	{
+		if (isLocalPlayer)
+		{
+			Debug.Log($"Teleporting player {PlayerId}");
+			transform.position = new Vector3(position.x, 0, position.z);
+//			_smoothSync.teleport();
+		}
+	}
+	
 	[Server]
 	public void ServerUnDie()
 	{
@@ -115,6 +139,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 	public void LocalDie()
 	{
 		Debug.Log($"Killing local player {PlayerId}");
+		_smoothSync.stopLerping();
 		_graphics.SetActive(false);
 		collider.enabled = false;
 		rigidbody.isKinematic = true;
@@ -127,6 +152,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 		_graphics.SetActive(true);
 		collider.enabled = true;
 		rigidbody.isKinematic = false;
+		_smoothSync.restartLerping();
 	}
 	
 	
