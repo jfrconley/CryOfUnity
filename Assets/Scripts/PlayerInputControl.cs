@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Smooth;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SmoothSync))]
 public class PlayerInputControl : MonoBehaviour
 {
     //Component References
     private PlayerGunControl _gunControl;
 	private new Rigidbody rigidbody;
 	private PlayerNetworkManager _networkManager;
+	private SmoothSync _smoothSync;
     private Camera cam;
 
 	//Serialized
@@ -16,7 +19,9 @@ public class PlayerInputControl : MonoBehaviour
     [SerializeField] private float footstepTimer = 0.4f;
     private float footstep;
 	
-	private void Awake () {
+	private void Awake ()
+	{
+		_smoothSync = gameObject.GetComponent<SmoothSync>();
         _gunControl = gameObject.GetComponent<PlayerGunControl>();
         rigidbody = gameObject.GetComponent<Rigidbody>();
 		_networkManager = gameObject.GetComponent<PlayerNetworkManager>();
@@ -72,7 +77,7 @@ public class PlayerInputControl : MonoBehaviour
 		}
 		else
 		{
-			if (rigidbody.velocity != Vector3.zero)
+			if (_smoothSync.latestReceivedVelocity != Vector3.zero)
 			{
 				footstep -= Time.deltaTime;
 				if (footstep <= 0)

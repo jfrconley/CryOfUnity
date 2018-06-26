@@ -23,13 +23,13 @@ public class GameCanvasManager : MonoBehaviour {
         }
 	}
 	
-    public void SetHealthMaximum(int max)
+    public void SetHealthMaximum(float max)
     {
         healthSlider.maxValue = max;
         healthSlider.value = max;
     }
 
-	public void SetHealth(int value)
+	public void SetHealth(float value)
     {
         healthSlider.value = value;
         if (value == 0)

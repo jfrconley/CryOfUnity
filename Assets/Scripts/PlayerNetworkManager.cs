@@ -8,7 +8,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 	[SyncVar (hook = nameof(UpdateName))]
 	public string PlayerId = "";
 
-	[SyncVar] public float Health = 100;
+	[SyncVar (hook = nameof(UpdateHealth))] public float Health = 100;
 
 	public TextMesh DebugText;
 	public new Collider collider;
@@ -22,6 +22,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 		// If we are local, set the layer to allow object collisions
 		if (isLocalPlayer)
 		{
+			GameCanvasManager.singleton.SetHealthMaximum(Health);
 			gameObject.layer = LayerMask.NameToLayer("Player");
 		}
 		else
@@ -41,7 +42,7 @@ public class PlayerNetworkManager : NetworkBehaviour
 			CmdRequestName();
 		}
 	}
-
+	
 	// Handle initial state sync for late clients
 	public override void OnStartClient()
 	{
@@ -50,6 +51,15 @@ public class PlayerNetworkManager : NetworkBehaviour
 		if (PlayerId != "")
 		{
 			UpdateName(PlayerId);
+		}
+	}
+
+	public void UpdateHealth(float health)
+	{
+		Health = health;
+		if (isLocalPlayer)
+		{
+			GameCanvasManager.singleton.SetHealth(health);
 		}
 	}
 	
